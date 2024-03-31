@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta property="og:title"
+        content="InstructBrush: Learning Attention-based Instruction Optimization for Image Editing" />
+    <meta property="og:url" content="https://royzhao926.github.io/InstructBrush/" />
+    <meta property="og:image" content="static/images/banner/banner.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>InstructBrush</title>
+    <link rel="icon" type="image/x-icon" href="static/static/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+    <link rel="stylesheet" href="static/css/bulma.min.css">
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="./static/css/juxtapose.css">
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+    <script defer src="static/js/fontawesome.all.min.js"></script>
+    <script src="static/js/bulma-carousel.min.js"></script>
+    <script src="static/js/index.js"></script>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.1.1/gradio.js"></script>
+
+</head>
+
+<body>
+
+    <section class="hero banner">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered">
+                    <div class="column has-text-centered">
+                        <!-- <h1 class="title is-1 publication-title"><i class="pixart-alpha-icon"></i>InstructBrush:<br /> Learning Attention-based Instruction Optimization for Image Editing</h1> -->
+                        <h1 class="title is-1 publication-title"></i><img src="static/images/framework/InstructBrush.png" width="40" height="40">&nbsp;InstructBrush:<br /> Learning Attention-based Instruction Optimization for Image Editing</h1>
+                        <div class="is-size-5 publication-authors">
+                            <!-- Paper authors -->
+                            <span class="author-block">
+                                <a target="_blank">Ruoyu Zhao<sup>1,2*</sup></a>&nbsp;&nbsp;</span>
+                              <span class="author-block">
+                                <a href="https://fqnchina.github.io/" target="_blank">Qingnan Fan<sup>2</sup></a>&nbsp;&nbsp;</span>
+                              <span class="author-block">
+                                <a target="_blank">Fei Kou<sup>2</sup></a>&nbsp;&nbsp;</span>
+                              <span class="author-block">
+                                <a target="_blank">Shuai Qin<sup>2</sup></a>&nbsp;&nbsp;</span>
+                              <span class="author-block">
+                                <a target="_blank">Hong Gu<sup>2</sup></a>&nbsp;&nbsp;</span>
+                              <span class="author-block">
+                                <a target="_blank">Wei Wu<sup>2,3*</sup></a>&nbsp;&nbsp;</span>
+                              <span class="author-block">
+                                <a target="_blank">Pengcheng Xu<sup>2,4*</sup></a>&nbsp;&nbsp;<br></span>
+                                
+                                <span class="author-block">
+                                    <a href="https://iip-xdu.github.io/team-mrzhu.html" target="_blank">Mingrui Zhu<sup>1</sup></a>&nbsp;&nbsp;</span>
+                                <span class="author-block">
+                                    <a href="https://iip-xdu.github.io/team-wnn.html" target="_blank">Nannan Wang<sup>1‡</sup></a>&nbsp;&nbsp;</span>
+                                <span class="author-block">
+                                    <a href="https://see.xidian.edu.cn/faculty/xbgao/" target="_blank">Xinbo Gao<sup>5</sup></a></span>
+                                  </div>
+
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block"><sup>1</sup>Xidian University&nbsp;</span> 
+                            <span class="author-block"><sup>2</sup>VIVO&nbsp;</span> 
+                            <span class="author-block"><sup>3</sup>CityU&nbsp;</span> 
+                            <span class="author-block"><sup>4</sup>Western University&nbsp;<br></span> 
+                            <span class="author-block"><sup>5</sup>Chongqing University of Posts and Telecommunications</span> 
+                
+                            <span class="corres-author"><small><br><sup>*</sup>Work done during the students' internships at VIVO</small></span>
+                            <span class="corres-author"><small><br><sup>‡</sup>Correspondence</small></span>
+                        </div>
+                        
+
+                        <div class="column has-text-centered">
+                            <div class="publication-links">
+                                 <!-- Arxiv PDF link -->
+                              <span class="link-block">
+                                <a href="https://arxiv.org/pdf/2403.18660.pdf" target="_blank"
+                                class="external-link button is-normal is-rounded is-white">
+                                <span class="icon">
+                                  <i class="fas fa-file-pdf"></i>
+                                </span>
+                                <span>Paper</span>
+                              </a>
+                            </span>
+                        
+        
+                          <!-- Github link -->
+                          <span class="link-block">
+                            <a href="https://github.com/RoyZhao926/InstructBrush" target="_blank"
+                            class="external-link button is-normal is-rounded is-white">
+                            <span class="icon">
+                              <i class="fab fa-github"></i>
+                            </span>
+                            <span>Code</span>
+                          </a>
+                        </span>
+        
+                        <!-- ArXiv abstract Link -->
+                         <span class="link-block">
+                          <a href="https://arxiv.org/abs/2403.18660" target="_blank"
+                          class="external-link button is-normal is-rounded is-white">
+                          <span class="icon">
+                            <i class="ai ai-arxiv"></i>
+                          </span>
+                          <span>arXiv</span>
+                        </a>
+                      </span> 
+
+                      <span class="link-block">
+                        <a href="https://drive.google.com/file/d/1uhOA8r0yBwDXg0aUCdJsoY4smer0rOv_/view?usp=sharing" target="_blank"
+                        class="external-link button is-normal is-rounded is-white">
+                            <span class="icon">
+                              <i class="ai ai-obp"></i>
+                            </span>
+                            <span>Benchmark</span>
+                            </a>
+                    </span> 
+                        <!-- 
+                        <div class="column has-text-centered">
+                            <div class="publication-links">
+                                <span class="link-block">
+                                    <a href="https://github.com/PixArt-alpha/PixArt-sigma" target="_blank"
+                                        class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">
+                                            <i class="fab fa-github"></i>
+                                        </span>
+                                        <span>Code</span>
+                                    </a>
+                                </span>
+                                <span class="link-block">
+                                    <a href="https://arxiv.org/abs/2403.04692" target="_blank"
+                                        class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">
+                                            <i class="ai ai-arxiv"></i>
+                                        </span>
+                                        <span>arXiv-PixArt-Σ</span>
+                                    </a>
+                                </span>
+                                <span class="link-block">
+                                    <a href="https://arxiv.org/abs/2310.00426" target="_blank"
+                                        class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">
+                                            <i class="ai ai-arxiv"></i>
+                                        </span>
+                                        <span>arXiv-PixArt-α</span>
+                                    </a>
+                                </span>
+                                <span class="link-block">
+                                    <a href="https://arxiv.org/abs/2401.05252" target="_blank"
+                                        class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">
+                                            <i class="ai ai-arxiv"></i>
+                                        </span>
+                                        <span>arXiv-PixArt-δ</span>
+                                    </a>
+                                </span>
+                                <span class="link-block">
+                                    <a href="https://discord.gg/rde6eaE5Ta" target="_blank"
+                                        class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">
+                                            <i class="fab fa-discord"></i>
+                                        </span>
+                                        <span>Discord</span>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="column has-text-centered">
+                            <div class="publication-links">
+                                <span class="link-block">
+                                    <a href="https://huggingface.co/spaces/PixArt-alpha/PixArt-alpha" target="_blank"
+                                        class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">🤗</span>
+                                        <span>HF Demo: PixArt-α</span>
+                                    </a>
+                                </span>
+                                <span class="link-block">
+                                    <a href="https://huggingface.co/spaces/PixArt-alpha/PixArt-LCM" target="_blank"
+                                        class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">🤗</span>
+                                        <span>HF Demo: PixArt-LCM</span>
+                                    </a>
+                                </span>
+                                <span class="link-block">
+                                    <a href="https://openxlab.org.cn/apps/detail/PixArt-alpha/PixArt-alpha" target="_blank"
+                                        class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">X</span>
+                                        <span>OpenXLab Demo: PixArt-α</span>
+                                    </a>
+                                </span>
+                                <span class="link-block">
+                                    <a href="https://openxlab.org.cn/apps/detail/houshaowei/PixArt-LCM" target="_blank"
+                                        class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">X</span>
+                                        <span>OpenXLab Demo: PixArt-LCM</span>
+                                    </a>
+                                </span>
+                                <span class="link-block">
+                                    <a href="https://colab.research.google.com/drive/1jZ5UZXk7tcpTfVwnX33dDuefNMcnW9ME?usp=sharing" target="_blank"
+                                       class="external-link button is-normal is-rounded is-white">
+                                        <span class="icon">
+                                            <i class="fab fa-google"></i>
+                                        </span>
+                                        <span>Colab Demo</span>
+                                    </a>
+                                </span> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="hero is-small">
+        <div class="hero-body">
+            <div class="container is-max-desktop has-text-centered">
+                <!-- <h2 class="title is-3">InfEdit-to-image Generation</h2> -->
+                <div class="has-text-justified">
+                    <p>
+                
+                    </p>
+                    <br>
+                </div>
+                <!-- row 1 -->
+                <div class="columns is-centered">
+                    <div class="column">
+                        <div class="content">
+                            <div class="tab_container">
+                                <div id="juxtapose-embed1" data-startingposition="30%" data-animate="true" class="juxtapose">
+                                    <div class="jx-slider">
+                                        <div class="jx-handle " style="left: 54.53%;">
+                                            <div class="jx-arrow jx-left"></div>
+                                            <div class="jx-control">
+                                                <div class="jx-controller" tabindex="0" role="slider" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="jx-arrow jx-right"></div>
+                                        </div>
+                                        <div class="jx-image jx-left " style="width: 54.53%;">
+                                            <img src="static/images/sliders/cloud_kitty2.png" alt="" data-label="Source">
+                                        </div>
+                                        <div class="jx-image jx-right " style="width: 45.47%;"><img src="static/images/sliders/cloud_kitty2_IB.png" alt="" data-label="Edit">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="has-text-justified">
+                            <p style="text-align: center;">
+                                Exemplar image pairs:
+                                <strong style="font-size: medium;">[&nbsp;<img src="static/images/reference/cloud_kitty_0.png" style="vertical-align:middle" width="50" height="50">, <img src="static/images/reference/cloud_kitty_1.png" style="vertical-align:middle" width="50" height="50">&nbsp;]</strong>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="content">
+                            <div class="tab_container">
+                                <div id="juxtapose-embed2" data-startingposition="30%" data-animate="true" class="juxtapose">
+                                    <div class="jx-slider">
+                                        <div class="jx-handle " style="left: 54.53%;">
+                                            <div class="jx-arrow jx-left"></div>
+                                            <div class="jx-control">
+                                                <div class="jx-controller" tabindex="0" role="slider" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="jx-arrow jx-right"></div>
+                                        </div>
+                                        <div class="jx-image jx-left " style="width: 54.53%;"><img src="static/images/sliders/lava2.png" alt="" data-label="Source">
+                                        </div>
+                                        <div class="jx-image jx-right " style="width: 45.47%;"><img src="static/images/sliders/lava2_IB.png" alt="" data-label="Edit">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="has-text-justified">
+                            <p style="text-align: center;">
+                                Exemplar image pairs:
+                                <strong style="font-size: medium;">[&nbsp;<img src="static/images/reference/lava_0.png" style="vertical-align:middle" width="50" height="50">, <img src="static/images/reference/lava_1.png" style="vertical-align:middle" width="50" height="50">&nbsp;]</strong>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="content">
+                            <div class="tab_container">
+                                <div id="juxtapose-embed2" data-startingposition="30%" data-animate="true" class="juxtapose">
+                                    <div class="jx-slider">
+                                        <div class="jx-handle " style="left: 54.53%;">
+                                            <div class="jx-arrow jx-left"></div>
+                                            <div class="jx-control">
+                                                <div class="jx-controller" tabindex="0" role="slider" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="jx-arrow jx-right"></div>
+                                        </div>
+                                        <div class="jx-image jx-left " style="width: 54.53%;"><img src="static/images/sliders/juice.png" alt="" data-label="Source">
+                                        </div>
+                                        <div class="jx-image jx-right " style="width: 45.47%;"><img src="static/images/sliders/juice_IB.png" alt="" data-label="Edit">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="has-text-justified">
+                            <p style="text-align: center;">
+                                Exemplar image pairs:
+                                <strong style="font-size: medium;">[&nbsp;<img src="static/images/reference/juice_0.png" style="vertical-align:middle" width="50" height="50">, <img src="static/images/reference/juice_1.png" style="vertical-align:middle" width="50" height="50">&nbsp;]</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- row 2 -->
+                <div class="columns is-centered">
+                    <div class="column">
+                        <div class="content">
+                            <div class="tab_container">
+                                <div id="juxtapose-embed1" data-startingposition="30%" data-animate="true" class="juxtapose">
+                                    <div class="jx-slider">
+                                        <div class="jx-handle " style="left: 54.53%;">
+                                            <div class="jx-arrow jx-left"></div>
+                                            <div class="jx-control">
+                                                <div class="jx-controller" tabindex="0" role="slider" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="jx-arrow jx-right"></div>
+                                        </div>
+                                        <div class="jx-image jx-left " style="width: 54.53%;">
+                                            <img src="static/images/sliders/read_books.png" alt="" data-label="Source">
+                                        </div>
+                                        <div class="jx-image jx-right " style="width: 45.47%;"><img src="static/images/sliders/read_books_IB.png" alt="" data-label="Edit">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="has-text-justified">
+                            <p style="text-align: center;">
+                                Exemplar image pairs:
+                                <strong style="font-size: medium;">[&nbsp;<img src="static/images/reference/read_books_0.png" style="vertical-align:middle" width="50" height="50">, <img src="static/images/reference/read_books_1.png" style="vertical-align:middle" width="50" height="50">&nbsp;]</strong>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="content">
+                            <div class="tab_container">
+                                <div id="juxtapose-embed1" data-startingposition="30%" data-animate="true" class="juxtapose">
+                                    <div class="jx-slider">
+                                        <div class="jx-handle " style="left: 54.53%;">
+                                            <div class="jx-arrow jx-left"></div>
+                                            <div class="jx-control">
+                                                <div class="jx-controller" tabindex="0" role="slider" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="jx-arrow jx-right"></div>
+                                        </div>
+                                        <div class="jx-image jx-left " style="width: 54.53%;">
+                                            <img src="static/images/sliders/sketch.jpg" alt="" data-label="Source">
+                                        </div>
+                                        <div class="jx-image jx-right " style="width: 45.47%;"><img src="static/images/sliders/sketch_IB.png" alt="" data-label="Edit">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="has-text-justified">
+                            <p style="text-align: center;">
+                                Exemplar image pairs:
+                                <strong style="font-size: medium;">[&nbsp;<img src="static/images/reference/sketch_0.jpg" style="vertical-align:middle" width="50" height="50">, <img src="static/images/reference/sketch_1.jpg" style="vertical-align:middle" width="50" height="50">&nbsp;]</strong>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="content">
+                            <div class="tab_container">
+                                <div id="juxtapose-embed1" data-startingposition="30%" data-animate="true" class="juxtapose">
+                                    <div class="jx-slider">
+                                        <div class="jx-handle " style="left: 54.53%;">
+                                            <div class="jx-arrow jx-left"></div>
+                                            <div class="jx-control">
+                                                <div class="jx-controller" tabindex="0" role="slider" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="jx-arrow jx-right"></div>
+                                        </div>
+                                        <div class="jx-image jx-left " style="width: 54.53%;">
+                                            <img src="static/images/sliders/smile.png" alt="" data-label="Source">
+                                        </div>
+                                        <div class="jx-image jx-right " style="width: 45.47%;"><img src="static/images/sliders/smile_IB.png" alt="" data-label="Edit">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="has-text-justified">
+                        <div class="has-text-justified">
+                            <p style="text-align: center;">
+                                Exemplar image pairs:
+                                <strong style="font-size: medium;">[&nbsp;<img src="static/images/reference/smile_0.png" style="vertical-align:middle" width="50" height="50">, <img src="static/images/reference/smile_1.png" style="vertical-align:middle" width="50" height="50">&nbsp;]</strong>
+                            </p>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- row 3 -->
+                <div class="columns is-centered">
+                    <div class="column">
+                        <div class="content">
+                            <div class="tab_container">
+                                <div id="juxtapose-embed1" data-startingposition="30%" data-animate="true" class="juxtapose">
+                                    <div class="jx-slider">
+                                        <div class="jx-handle " style="left: 54.53%;">
+                                            <div class="jx-arrow jx-left"></div>
+                                            <div class="jx-control">
+                                                <div class="jx-controller" tabindex="0" role="slider" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="jx-arrow jx-right"></div>
+                                        </div>
+                                        <div class="jx-image jx-left " style="width: 54.53%;">
+                                            <img src="static/images/sliders/trafficlights.png" alt="" data-label="Source">
+                                        </div>
+                                        <div class="jx-image jx-right " style="width: 45.47%;"><img src="static/images/sliders/trafficlights_IB.png" alt="" data-label="Edit">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="has-text-justified">
+                            <p style="text-align: center;">
+                                Exemplar image pairs:
+                                <strong style="font-size: medium;">[&nbsp;<img src="static/images/reference/trafficlights_0.png" style="vertical-align:middle" width="50" height="50">, <img src="static/images/reference/trafficlights_1.png" style="vertical-align:middle" width="50" height="50">&nbsp;]</strong>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="content">
+                            <div class="tab_container">
+                                <div id="juxtapose-embed1" data-startingposition="30%" data-animate="true" class="juxtapose">
+                                    <div class="jx-slider">
+                                        <div class="jx-handle " style="left: 54.53%;">
+                                            <div class="jx-arrow jx-left"></div>
+                                            <div class="jx-control">
+                                                <div class="jx-controller" tabindex="0" role="slider" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="jx-arrow jx-right"></div>
+                                        </div>
+                                        <div class="jx-image jx-left " style="width: 54.53%;">
+                                            <img src="static/images/sliders/d2c.png" alt="" data-label="Source">
+                                        </div>
+                                        <div class="jx-image jx-right " style="width: 45.47%;"><img src="static/images/sliders/d2c_IB.png" alt="" data-label="Edit">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="has-text-justified">
+                            <p style="text-align: center;">
+                                Exemplar image pairs:
+                                <strong style="font-size: medium;">[&nbsp;<img src="static/images/reference/d2c_0.png" style="vertical-align:middle" width="50" height="50">, <img src="static/images/reference/d2c_1.png" style="vertical-align:middle" width="50" height="50">&nbsp;]</strong>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="content">
+                            <div class="tab_container">
+                                <div id="juxtapose-embed1" data-startingposition="30%" data-animate="true" class="juxtapose">
+                                    <div class="jx-slider">
+                                        <div class="jx-handle " style="left: 54.53%;">
+                                            <div class="jx-arrow jx-left"></div>
+                                            <div class="jx-control">
+                                                <div class="jx-controller" tabindex="0" role="slider" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="jx-arrow jx-right"></div>
+                                        </div>
+                                        <div class="jx-image jx-left " style="width: 54.53%;">
+                                            <img src="static/images/sliders/snow.png" alt="" data-label="Source">
+                                        </div>
+                                        <div class="jx-image jx-right " style="width: 45.47%;"><img src="static/images/sliders/snow_IB.png" alt="" data-label="Edit">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="has-text-justified">
+                            <p style="text-align: center;">
+                                Exemplar image pairs:
+                                <strong style="font-size: medium;">[&nbsp;<img src="static/images/reference/rain_0.png" style="vertical-align:middle" width="50" height="50">, <img src="static/images/reference/rain_1.png" style="vertical-align:middle" width="50" height="50">&nbsp;]</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+      </section>
+      
+      <section class="section">
+    <!-- Paper abstract -->
+    <section class="section hero is-light">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">Abstract</h2>
+                    <div class="content has-text-justified">
+                        <p>
+                            In recent years, instruction-based image editing methods have
+                            garnered significant attention in image editing. However, despite encompassing a wide range of editing priors, these methods are helpless
+                            when handling editing tasks that are challenging to accurately describe
+                            through language. We propose <b><i>InstructBrush</i></b>, an inversion method
+                            for instruction-based image editing methods to bridge this gap. It extracts editing effects from Exemplar image pairs: as editing instructions,
+                            which are further applied for image editing. Two key techniques are introduced into InstructBrush, <i>Attention-based Instruction Optimization</i> and
+                            <i>Transformation-oriented Instruction Initialization</i>, to address the limitations of the previous method in terms of inversion effects and instruction
+                            generalization. To explore the ability of instruction inversion methods to guide image editing in open scenarios, we establish a 
+                            <b>T</b>ransformation-<b>O</b>riented <b>P</b>aired <b>Bench</b>mark (<b>TOP-Bench</b>), which contains a rich set
+                            of scenes and editing types. The creation of this benchmark paves the
+                            way for further exploration of instruction inversion. Quantitatively and
+                            qualitatively, our approach achieves superior performance in editing and
+                            is more semantically consistent with the target editing effects.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End paper abstract -->
+<!--    <section class="hero is-small">-->
+<!--        <div class="hero-body">-->
+<!--            <div class="container is-centered has-text-centered">-->
+<!--                <h2 class="title is-3">Online Demo</h2>-->
+<!--                <gradio-app src="https://pixart-alpha-pixart-alpha.hf.space" style="display: flex; justify-content: center;"></gradio-app>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+
+
+<!--    <section class="hero is-small">-->
+<!--        <div class="hero-body">-->
+<!--            <div class="container is-max-desktop">-->
+<!--                <h2 class="title is-3">Training Efficiency</h2>-->
+<!--                <p>Comparisons of CO<sub>2</sub> emissions and training cost among T2I generators. PIXART-&alpha;-->
+<!--                    achieves an exceptionally low training cost of $26,000. Compared to RAPHAEL, our CO<sub>2</sub>-->
+<!--                    emissions-->
+<!--                    and training costs are merely 1.1% and 0.85%, respectively.-->
+<!--                </p>-->
+<!--                <img loading="lazy" src="static/static/images/efficiency.svg" alt="efficiency" />-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+
+    <!-- More Samples -->
+    <section class="hero is-small">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <h2 class="title is-3">More Samples</h2>
+        
+                <div class="columns is-centered has-text-centered">
+                    <div class="column">
+                        <div id="modal-sample5" class="modal">
+                            <div class="modal-background"></div>
+                            <div class="modal-content">
+                                <img loading="lazy" src="static/images/results/result1.jpg" />
+                            </div>
+                            <button class="modal-close is-large" aria-label="close"></button>
+                        </div>
+                        <div class="card">
+                            <div class="card-image js-modal-trigger" data-target="modal-sample5">
+                                <img loading="lazy" src="static/images/results/result1.jpg" alt="sample5" />
+                            </div>
+                            <div class="card-content">Our method shows robust performance in <i><b>local</b></i> editing. It extracts the editing effect from 
+                                reference image pairs, and then applies it for editing new images. <br/> <b>IN</b>: Input Image. <b>GT</b>: Ground Truth. 
+                                </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div id="modal-sample6" class="modal">
+                            <div class="modal-background"></div>
+                            <div class="modal-content">
+                                <img loading="lazy" src="static/images/results/result2.jpg" />
+                            </div>
+                            <button class="modal-close is-large" aria-label="close"></button>
+                        </div>
+                        <div class="card">
+                            <div class="card-image js-modal-trigger" data-target="modal-sample6">
+                                <img loading="lazy" src="static/images/results/result2.jpg" alt="sample6">
+                            </div>
+                            <div class="card-content">Our method shows robust performance in <i><b>global</b></i> editing. It extracts the editing effect from 
+                                reference image pairs, and then applies it for editing new images. <br/> <b>IN</b>: Input Image. <b>GT</b>: Ground Truth. </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison to Other Methods -->
+    <section class="hero is-small">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <h2 class="title is-3">Comparison to Other Methods</h2>
+        
+                <div class="columns is-centered has-text-centered">
+                    <div class="column">
+                        <div id="modal-sample5" class="modal">
+                            <div class="modal-background"></div>
+                            <div class="modal-content">
+                                <img loading="lazy" src="static/images/results/compare1.jpg" />
+                            </div>
+                            <button class="modal-close is-large" aria-label="close"></button>
+                        </div>
+                        <div class="card">
+                            <div class="card-image js-modal-trigger" data-target="modal-sample5">
+                                <img loading="lazy" src="static/images/results/compare1.jpg" alt="sample5" />
+                            </div>
+                            <div class="card-content">Our method achieves superior performance in <b><i>local</i></b> editing. It effectively avoids introducing editing-independent information from the training
+                                image and shows better instruction generalization.</div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div id="modal-sample6" class="modal">
+                            <div class="modal-background"></div>
+                            <div class="modal-content">
+                                <img loading="lazy" src="static/images/results/compare2.jpg" />
+                            </div>
+                            <button class="modal-close is-large" aria-label="close"></button>
+                        </div>
+                        <div class="card">
+                            <div class="card-image js-modal-trigger" data-target="modal-sample6">
+                                <img loading="lazy" src="static/images/results/compare2.jpg" alt="sample6">
+                            </div>
+                            <div class="card-content">Our method achieves superior performance in <b><i>global</i></b> editing. It effectively avoids introducing editing-independent information from the training
+                                image and shows better instruction generalization.</div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOP-Bench -->
+    <section class="hero is-small">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <h2 class="title is-3">TOP-Bench</h2>
+        
+                <div class="columns is-centered has-text-left">
+                    <div class="column">
+                        <div id="modal-sample7" class="modal">
+                            <div class="modal-background"></div>
+                            <div class="modal-content">
+                                <img loading="lazy" src="static/images/results/bench.jpg" />
+                            </div>
+                            <button class="modal-close is-large" aria-label="close"></button>
+                        </div>
+                        <div class="card">
+                            <div class="card-image js-modal-trigger" data-target="modal-sample7">
+                                <img loading="lazy" src="static/images/results/bench.jpg" alt="sample7" />
+                            </div>
+                            <div class="card-content">To investigate the editing capabilities of various instruction inversion methods in open scenarios and facilitate a fair comparison of these methods, We
+                                establish a benchmark named <a href="https://drive.google.com/file/d/1uhOA8r0yBwDXg0aUCdJsoY4smer0rOv_/view?usp=sharing"><b>TOP-Bench</b></a> (<b>T</b>ransformation-<b>O</b>riented <b>P</b>aired <b>Bench</b>mark), which can be utilized for both qualitative and quantitative evaluations. Our benchmark spans 25 datasets corresponding to different editing
+                                effects. It covers a wide range of editing categories and scenarios, allowing for division from multiple dimensions. Each dataset consists of 10 pairs of training
+                                images and 5 pairs of testing images, totaling 750 images. Additionally, we provide text instructions aligned with the transformation effects for each dataset.
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- application-->
+    <section class="hero is-small">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <h2 class="title is-3">Application</h2>
+                <div class="columns is-centered">
+                    <div class="column">
+                        <div class="content">
+                            <div class="tab_container" >
+                                <div id="juxtapose-embed1" data-startingposition="30%" data-animate="true" class="juxtapose">
+                                    <div class="jx-slider">
+                                        <div class="jx-handle " style="left: 54.53%;">
+                                            <div class="jx-arrow jx-left"></div>
+                                            <div class="jx-control">
+                                                <div class="jx-controller" tabindex="0" role="slider" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="jx-arrow jx-right"></div>
+                                        </div>
+                                        <div class="jx-image jx-left " style="width: 54.53%;">
+                                            <img src="static/images/sliders/tone01.png" alt="" data-label="Source">
+                                        </div>
+                                        <div class="jx-image jx-right " style="width: 45.47%;"><img src="static/images/sliders/tone02.png" alt="" data-label="Edit">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="has-text-justified">
+                            <p style="text-align: center;">
+                                
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="content">
+                            <div class="tab_container">
+                                <div id="juxtapose-embed1" data-startingposition="30%" data-animate="true" class="juxtapose">
+                                    <div class="jx-slider">
+                                        <div class="jx-handle " style="left: 54.53%;">
+                                            <div class="jx-arrow jx-left"></div>
+                                            <div class="jx-control">
+                                                <div class="jx-controller" tabindex="0" role="slider" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="jx-arrow jx-right"></div>
+                                        </div>
+                                        <div class="jx-image jx-left " style="width: 54.53%;">
+                                            <img src="static/images/sliders/tone01.png" alt="" data-label="Source">
+                                        </div>
+                                        <div class="jx-image jx-right " style="width: 45.47%;"><img src="static/images/sliders/tone03.png" alt="" data-label="Edit">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="has-text-justified">
+                            <p style="text-align: center;">
+                              
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="content">
+                            <div class="tab_container">
+                                <div id="juxtapose-embed2" data-startingposition="30%" data-animate="true" class="juxtapose">
+                                    <div class="jx-slider">
+                                        <div class="jx-handle " style="left: 54.53%;">
+                                            <div class="jx-arrow jx-left"></div>
+                                            <div class="jx-control">
+                                                <div class="jx-controller" tabindex="0" role="slider" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="jx-arrow jx-right"></div>
+                                        </div>
+                                        <div class="jx-image jx-left " style="width: 54.53%;"><img src="static/images/sliders/tone01.png" alt="" data-label="Source">
+                                        </div>
+                                        <div class="jx-image jx-right " style="width: 45.47%;"><img src="static/images/sliders/tone04.png" alt="" data-label="Edit">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="has-text-justified">
+                            <p style="text-align: center;">
+                               
+                            </p>
+                        </div>
+                        
+                    </div>
+                </div>
+                        <b><i>InstructBrush</i></b> can extract different image
+                        tones based on a handful of data pairs and apply them to new images. The images on
+                        the left give the same input image, and the images on the right show the editing images,
+                        corresponding to different image tones.
+            </div>
+        </div>
+    </section>
+
+
+<!-- ------------------framework carousel------------------ -->
+<section class="section hero is-light">
+    <div class="hero-body">
+      <div class="container is-max-desktop" style="max-width: 800px;">
+     
+        <h2 class="title is-3">How does it work?</h2>
+          <!-- Your image here -->
+          <img src="static/images/framework/framework.png" alt="Description of the image"/>
+            <!-- First image description.-->
+            <ul  class="custom-list">
+  
+              <li><b><i>InstructBrush</i></b> inverts instructions from
+                Exemplar image pairs: by proposing novel <b>Transformation-oriented Instruction Initialization</b> (a) and <b>Attention-based Instruction Optimization</b> (b) modules. The former is
+                proposed to initialize the instruction, which effectively introduces the editing-related
+                prior to facilitate semantic alignment of the instruction with the Exemplar image pairs:.
+                The latter introduces the editing instruction into the cross-attention layers of the
+                instruction-based image editing model and directly optimizes the Keys and Values
+                corresponding to the instruction within these layers. After optimization, the learned
+                instructions are used to guide the editing of new images (c).
+                 </li>
+          </ul>
+  
+  </div>
+  </div>
+  </section>
+
+
+<!--    BibTex citation-->
+    <section class="section" id="BibTeX">
+        <div class="container is-max-desktop content">
+            <h2 class="title"><a id="bibtex">BibTeX</a></h2>
+            <pre><code>@article{zhao2024instructbrush,
+            title={InstructBrush: Learning Attention-based Instruction Optimization for Image Editing},
+            author={Zhao, Ruoyu and Fan, Qingnan and Kou, Fei and Qin, Shuai and Gu, Hong and Wu, Wei and Xu, Pengcheng and Zhu, Mingrui and Wang, Nannan and Gao, Xinbo},
+            journal={arXiv preprint arXiv:2403.18660},
+            year={2024}
+            }</code></pre>
+        </div>
+    </section>
+<!--    End BibTex citation-->
+    <footer class="footer">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="content">
+                        <p>
+                            This page was built using the <a
+                                href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                                target="_blank">Academic Project Page Template</a> which was adopted from the <a
+                                href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+                            You are free to borrow the of this website, we just ask that you link back to this page in
+                            the footer. <br> This website is licensed under a <a rel="license"
+                                href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+                                Commons Attribution-ShareAlike 4.0 International License</a>.
+                        </p>
+                        <p class="has-text-centered">Total clicks: <span id="busuanzi_value_site_pv"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Statcounter tracking code -->
+    <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+    <!-- End of Statcounter Code -->
+<script src="./static/js/juxtapose.js"></script>
+
+</body>
+
+</html>
